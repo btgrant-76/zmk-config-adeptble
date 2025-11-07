@@ -6,6 +6,9 @@
 
 // #include <dt-bindings/zmk/mouse.h>
 
+#define BACK LG(LBKT)
+#define FWD  LG(RBKT)
+
 #define DEFAULT 0
 #define SCRLM 1
 #define SCRLH 2
@@ -28,7 +31,7 @@
       #binding-cells = <2>;
       flavor = "tap-preferred";
       tapping-term-ms = <200>;
-      bindings = <&mo>, <&mkp>;
+      bindings = <&mo>, <&kp>;
     };
     lth: layer-tap-hold-while-undecided {
       compatible = "zmk,behavior-hold-tap";
@@ -52,7 +55,7 @@
     default_layer {
       display-name = "Default";
       bindings = <
-        &ltm BLTH MB4   &ltm DEVICE MB5   &mkp MCLK     &mkp RCLK
+        &ltm BLTH BACK /*LG(LBKT)*/   &ltm DEVICE FWD /*LG(RBKT)*/   &mkp MCLK     &mkp RCLK
         &mkp LCLK                                       &mto SCRLM SNIPE
       >;
     };
