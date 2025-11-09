@@ -29,39 +29,39 @@
   combos {
     compatible = "zmk,combos";
     combo_esc {
-      timeout-ms = <50>; // TODO what is the default?
+      timeout-ms = <50>;
       key-positions = <2 3>;
       bindings = <&mkp RCLK>;
     };
-    copy {
+    combo_copy {
       timeout-ms = <50>;
       key-positions = <3 4>;
       bindings = <&kp LG(C)>;
     };
-    paste {
+    combo_paste {
       timeout-ms = <50>;
       key-positions = <4 5>;
       bindings = <&kp LG(V)>;
     };
-    cut {
+    combo_cut {
       timeout-ms = <50>;
       key-positions = <0 1>;
+      layers = <DEFAULT>;
       bindings = <&kp LG(X)>;
     };
-    media_layer_toggle {
-      timeout-ms = <50>;
+    combo_media_layer_toggle {
+      timeout-ms = <100>;
       key-positions = <0 4>;
       bindings = <&tog MEDIA>;
     };
-
-    /* TODO combos to create
-        - btn1 + btn2:  copy
-        - btn1 + scroll:  paste
-        - back + fwd:  cut
-        - btn1 + back:  toggle to media layer
-        - media back + media fwd:  play/pause
-     */
+    combo_media_play_pause {
+      timeout-ms = <50>;
+      key-positions = <0 1>;
+      layers = <MEDIA>;
+      bindings = <&kp C_PP>;
+    };
   };
+
   behaviors {
     ltm: layer-tap-momentary {
       compatible = "zmk,behavior-hold-tap";
@@ -87,6 +87,7 @@
       bindings = <&mo>, <&to>;
     };
   };
+
   keymap {
     compatible = "zmk,keymap";
     default_layer {
@@ -136,10 +137,6 @@
       bindings = <
         &kp C_PREV      &kp C_NEXT        MISS_CTL      EXPOSE
         &trans                                          &tog MEDIA
-        /*
-          prev next mission control expose
-          btn1                      toggle to default
-         */
       >;
     };
   };
