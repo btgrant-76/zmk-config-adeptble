@@ -9,21 +9,58 @@
 #define BACK LG(LBKT)
 #define FWD  LG(RBKT)
 
+#define UNDO_    &kp LG(Z)
+#define CUT_     &kp LG(X)
+#define COPY_    &kp LG(C)
+#define PASTE_   &kp LG(V)
+#define REDO_    &kp LS(LG(Z))
+#define MISS_CTL &kp LC(UP)
+#define EXPOSE   &kp LC(DOWN)
+
 #define DEFAULT 0
 #define SCRLM 1
 #define SCRLH 2
 #define DEVICE 3
 #define BLTH 4
 #define SNIPE 5
+#define MEDIA 6
 
 / {
   combos {
     compatible = "zmk,combos";
     combo_esc {
-      timeout-ms = <50>;
+      timeout-ms = <50>; // TODO what is the default?
       key-positions = <2 3>;
       bindings = <&mkp RCLK>;
     };
+    copy {
+      timeout-ms = <50>;
+      key-positions = <3 4>;
+      bindings = <&kp LG(C)>;
+    };
+    paste {
+      timeout-ms = <50>;
+      key-positions = <4 5>;
+      bindings = <&kp LG(V)>;
+    };
+    cut {
+      timeout-ms = <50>;
+      key-positions = <0 1>;
+      bindings = <&kp LG(X)>;
+    };
+    media_layer_toggle {
+      timeout-ms = <50>;
+      key-positions = <0 4>;
+      bindings = <&tog MEDIA>;
+    };
+
+    /* TODO combos to create
+        - btn1 + btn2:  copy
+        - btn1 + scroll:  paste
+        - back + fwd:  cut
+        - btn1 + back:  toggle to media layer
+        - media back + media fwd:  play/pause
+     */
   };
   behaviors {
     ltm: layer-tap-momentary {
@@ -55,7 +92,7 @@
     default_layer {
       display-name = "Default";
       bindings = <
-        &ltm BLTH BACK /*LG(LBKT)*/   &ltm DEVICE FWD /*LG(RBKT)*/   &mkp MCLK     &mkp RCLK
+        &ltm BLTH BACK  &ltm DEVICE FWD   &mkp MCLK     &mkp RCLK
         &mkp LCLK                                       &mto SCRLM SNIPE
       >;
     };
@@ -92,6 +129,17 @@
       bindings = <
         &trans          &trans            &trans        &lth SCRLM RCLK
         &trans                                          &to DEFAULT
+      >;
+    };
+    media_layer {
+      display-name = "Media";
+      bindings = <
+        &kp C_PREV      &kp C_NEXT        MISS_CTL      EXPOSE
+        &trans                                          &tog MEDIA
+        /*
+          prev next mission control expose
+          btn1                      toggle to default
+         */
       >;
     };
   };
